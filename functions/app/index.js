@@ -4,13 +4,17 @@ import cors from 'cors'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import compression from 'compression'
+import customLogger from '../utils/logger'
 
-export default function expressApp() {
+export default function expressApp(functionName) {
   const app = express();
   const router = express.Router();
 
   // gzip responses
   router.use(compression());
+
+  // Set router base path for local dev
+  const routerBasePath = process.env.NODE_ENV === 'dev' ? `/${functionName}` : `/.netlify/functions/${functionName}/`
 
   /** define routes */
   router.get('/coba', function(req, res) {
@@ -21,12 +25,25 @@ export default function expressApp() {
     res.send('Hello world');
   })
 
+  router.get('/users', (req, res) => {
+    res.json({
+      users: [
+        {
+          name: 'steve',
+        },
+        {
+          name: 'joe',
+        },
+      ],
+    })
+  })
+
 
   // Attach logger
   app.use(morgan(customLogger))
 
   // Setup routes
-  app.use('/', router)
+  app.use(routerBasePath, router)
 
   // Express middlewares
   router.use(cors())
