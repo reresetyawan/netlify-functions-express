@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 
-export default function expressApp(functionName) {
+export default function expressApp() {
   const app = express();
   const router = express.Router();
 
