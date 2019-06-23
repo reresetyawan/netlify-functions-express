@@ -17,11 +17,18 @@ export default function expressApp() {
     res.send('Coba Route');
   })
 
-  router.get('/hello/', function (req, res) {
+  router.get('/', function (req, res) {
     res.send('Hello world');
   })
 
-  app.use('/api', router)
+
+  // Attach logger
+  app.use(morgan(customLogger))
+
+  // Setup routes
+  app.use('/', router)
+
+  // Express middlewares
   router.use(cors())
   router.use(bodyParser.json())
   router.use(bodyParser.urlencoded({ extended: true }))
