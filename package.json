@@ -24,7 +24,8 @@
     "build": "npm-run-all --parallel build:**",
     "build:app": "react-scripts build",
     "build:functions": "netlify-lambda build functions",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "rere2": "node ./functions/standalone-aws-serverless-express-example.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
